@@ -21,14 +21,45 @@ to_send = {
 
 to_send_2 = {
     'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a',
-    'request_form': 'amo',
+    'request_from': 'amo',
     'state': 'get_lead_info',
-    'lead_id': 131,
+    'lead_id': 111,
 
 }
-
+to_send_3 = {
+    "api_key": "Hvdtygevzr52unsrabsr5q1gA#a",
+    "request_from": "amo",
+    "state": "link",
+    "lead_id": "111",
+    "product_type": "sample",
+    "name": "",
+    "product": "Краска",
+    "delivery_date": "",
+    "delivery_terms": "Не определено",
+    "potential_vol": "25",
+    "kp_price": "10",
+    "vol": "",
+    "price": "",
+    "basis": "PE",
+    "catalog": "RAL",
+    "code": "2215",
+    "shine": "Не определено",
+    "facture": "Гладкая",
+    "temperature": "Стандарт",
+    "postforming": 0,
+    "applying": "Не определено",
+    "surface_thin": "",
+    "surface_type": "Не определено",
+    "comment": "",
+    "metallic": 0,
+    "chameleon": 0,
+    "antibacterial": 0,
+    "antigraffiti": 0,
+    "architect": 0,
+    "zinc": 0
+}
 def send_request():
-    a = requests.post(URL2, json=to_send_2)
+    a = requests.post(URL2, json=to_send_3)
     print(a)
     print(a.text)
     logging.debug(a.text)

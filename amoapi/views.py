@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 import time
-from .functions import *
+from .functions import get_lead_data, attach_goods
 from .tokenz import api_key
 from .models import Leads
 from rest_framework.response import Response
@@ -73,12 +73,13 @@ def send_email(request):
 
     return HttpResponse('<h1>Ok boomer</h1>')
 
+
 @api_view(['POST'])
 def api(request):
     req = request.data
     if not api_key == req['api_key']:
         return HttpResponse('<h1>Nice try :D</h1>')
-    if req['request_form'] == 'amo':
+    if req['request_from'] == 'amo':
         # Даем инфо по лиду
         if req['state'] == 'get_lead_info':
             result = get_lead_data(req)
@@ -86,6 +87,8 @@ def api(request):
         elif req['state'] == 'add_lead':
             lead = Leads(amo_lead_id=req['lead_id'])
             lead.save()
-        elif req['state'] == 'link' and req['lead_id'] and req['']:
-                    
-
+            return HttpResponse('done') # Так хотят на фронте
+        elif req['state'] == 'link' and req['lead_id'] and req['product_type']:
+            result = attach_goods(req)
+            logging.debug(result)
+            return Response(result)

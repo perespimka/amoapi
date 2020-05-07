@@ -23,7 +23,7 @@ class Paints(models.Model):
 class PaintsLeads(models.Model):
     paint = models.ForeignKey(Paints, on_delete=models.CASCADE)
     lead = models.ForeignKey(Leads, on_delete=models.CASCADE)
-    date_add = models.CharField(max_length=45, blank=True, null=True)
+    date_add = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     temperature = models.CharField(max_length=45, blank=True, null=True)
     applying = models.CharField(max_length=45, blank=True, null=True)
     postforming = models.CharField(max_length=45, blank=True, null=True)
