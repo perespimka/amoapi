@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <form name="pass_save">
+            <input type="text" name="pass">
+            <button id="button1">Ок</button>
+        </form>
+        <script>
+            domain = 'hhtp://localhost:8000/'
+            
+            button1.onclick = function () {
+                var pass = document.forms.pass_save.elements.pass.value;
+                let xhr = new XMLHttpRequest();
+                xhr.open('POST', domain );
+                xhr.send();
+
+            };
+        </script>
+    </body>
+</html>

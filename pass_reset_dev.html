@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <p>aa1</p>
+        <form name="pass_save">
+            <input type="text" name="pass">
+            <button id="button1">Ok</button>
+        </form>
+        <script>
+            var domain = 'http://localhost:8000/';
+
+            button1.onclick = function () {
+                var xhr = new XMLHttpRequest();
+                var json = JSON.stringify({
+                    'state': 'send_prod',
+                    'sample_data':{
+                        'testkey1': 'testval1',
+                        'testkey2': 2
+                    },
+                    'manager_mail': 'sdfsdf',
+                    'manager_mail_pass': 'sdfsdf'
+                });
+                xhr.open('GET', domain, true);
+                //xhr.setRequestHeader( 'Access-Control-Allow-Origin', '*' );
+                //xhr.setRequestHeader( 'Access-Control-Allow-Methods', 'POST' );
+                //xhr.setRequestHeader( 'Access-Control-Allow-Headers', 'Origin, Content-Type, X-Auth-Token' );
+                //xhr.setRequestHeader('content-type' , 'application/json');
+                xhr.send();
+
+            }
+        </script>
+    </body>
+</html>

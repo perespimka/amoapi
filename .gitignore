@@ -1,0 +1,10 @@
+*.xlsx
+venv/
+mail_files/
+__init__.py
+*.py[co]
+__pycache__
+.vscode
+tokenz.py
+settings.py
+
