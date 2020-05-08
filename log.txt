@@ -3754,3 +3754,809 @@ AttributeError: 'PaintsLeads' object has no attribute 'catalog'
 2020-05-07 20:27:19,973 DEBUG Using selector: EpollSelector
 2020-05-07 20:27:19,977 DEBUG imhere
 2020-05-07 20:27:19,989 DEBUG {'status': 'done', 'tags': 'Образец paint cotologcode,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215'}
+2020-05-08 12:01:18,094 DEBUG request:
+2020-05-08 12:01:18,094 DEBUG application/json; charset=UTF-8
+2020-05-08 12:01:18,094 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:01:18,124 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:01:29,719 DEBUG request:
+2020-05-08 12:01:29,719 DEBUG application/json; charset=UTF-8
+2020-05-08 12:01:29,720 DEBUG {'state': 'set_score', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:01:34,125 DEBUG request:
+2020-05-08 12:01:34,125 DEBUG application/json; charset=UTF-8
+2020-05-08 12:01:34,125 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:01:34,159 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:11:41,139 DEBUG request:
+2020-05-08 12:11:41,139 DEBUG application/json; charset=UTF-8
+2020-05-08 12:11:41,139 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:11:41,153 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:12:43,286 DEBUG request:
+2020-05-08 12:12:43,286 DEBUG application/json; charset=UTF-8
+2020-05-08 12:12:43,286 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:12:43,301 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:19:44,860 DEBUG request:
+2020-05-08 12:19:44,860 DEBUG application/json; charset=UTF-8
+2020-05-08 12:19:44,861 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:19:44,903 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:27:00,489 DEBUG request:
+2020-05-08 12:27:00,489 DEBUG application/json; charset=UTF-8
+2020-05-08 12:27:00,490 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:27:00,505 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:30:17,581 DEBUG request:
+2020-05-08 12:30:17,582 DEBUG application/json; charset=UTF-8
+2020-05-08 12:30:17,582 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx'}
+2020-05-08 12:30:17,611 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 12:36:08,680 DEBUG request:
+2020-05-08 12:36:08,681 DEBUG application/json; charset=UTF-8
+2020-05-08 12:36:08,681 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['281', '282']}
+2020-05-08 12:36:08,707 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 13:23:49,912 DEBUG Using selector: EpollSelector
+2020-05-08 13:23:49,936 DEBUG {'status': 'done', 'tags': 'Образец paint cotologcode,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215,Образец Краска RAL2215'}
+2020-05-08 13:25:31,583 DEBUG request:
+2020-05-08 13:25:31,583 DEBUG application/json; charset=UTF-8
+2020-05-08 13:25:31,583 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['285', '281']}
+2020-05-08 13:25:31,614 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 13:31:09,613 DEBUG request:
+2020-05-08 13:31:09,614 DEBUG application/json; charset=UTF-8
+2020-05-08 13:31:09,614 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': []}
+2020-05-08 13:31:09,636 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 14:03:20,518 DEBUG request:
+2020-05-08 14:03:20,518 DEBUG application/json; charset=UTF-8
+2020-05-08 14:03:20,519 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['285', '281']}
+2020-05-08 14:03:20,549 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 14:05:57,072 DEBUG request:
+2020-05-08 14:05:57,072 DEBUG application/json; charset=UTF-8
+2020-05-08 14:05:57,072 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['285']}
+2020-05-08 14:05:57,084 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 14:07:52,567 DEBUG request:
+2020-05-08 14:07:52,567 DEBUG application/json; charset=UTF-8
+2020-05-08 14:07:52,567 DEBUG {'state': 'set_score', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['285', '281']}
+2020-05-08 14:07:59,528 DEBUG request:
+2020-05-08 14:07:59,529 DEBUG application/json; charset=UTF-8
+2020-05-08 14:07:59,529 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': ['285']}
+2020-05-08 14:07:59,550 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 14:12:04,681 DEBUG request:
+2020-05-08 14:12:04,681 DEBUG application/json; charset=UTF-8
+2020-05-08 14:12:04,682 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': []}
+2020-05-08 14:12:04,713 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 15:00:57,171 DEBUG Using selector: EpollSelector
+2020-05-08 15:06:49,239 DEBUG 10
+2020-05-08 15:06:49,241 DEBUG Using selector: EpollSelector
+2020-05-08 15:09:27,926 DEBUG Using selector: EpollSelector
+2020-05-08 15:09:27,959 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/amoapi/functions.py", line 127, in edit_paint
+    paint = Paints.objects.get(name=name, product=serialize_p.validated_data['product'], basis=serialize_p.validated_data['basis'],
+NameError: name 'serialize_p' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 948, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 431, in create
+    obj = self.model(**kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 500, in __init__
+    raise TypeError("%s() got an unexpected keyword argument '%s'" % (cls.__name__, kwarg))
+TypeError: PaintsLeads() got an unexpected keyword argument 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 132, in edit_paint
+    paint = serializer_p.save(name=name)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 967, in create
+    raise TypeError(msg)
+TypeError: Got a `TypeError` when calling `PaintsLeads.objects.create()`. This may be because you have a writable field on the serializer class that is not a valid argument to `PaintsLeads.objects.create()`. You may need to make the field read-only, or override the PaintsLeadsSerializerLink.create() method to handle this correctly.
+Original exception was:
+ Traceback (most recent call last):
+  File "/home/perespimka/monyze/amoapi/functions.py", line 127, in edit_paint
+    paint = Paints.objects.get(name=name, product=serialize_p.validated_data['product'], basis=serialize_p.validated_data['basis'],
+NameError: name 'serialize_p' is not defined
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 948, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 431, in create
+    obj = self.model(**kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 500, in __init__
+    raise TypeError("%s() got an unexpected keyword argument '%s'" % (cls.__name__, kwarg))
+TypeError: PaintsLeads() got an unexpected keyword argument 'name'
+
+2020-05-08 15:11:48,763 DEBUG Using selector: EpollSelector
+2020-05-08 15:11:48,796 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/amoapi/functions.py", line 127, in edit_paint
+    paint = Paints.objects.get(name=name, product=serializer_p.validated_data['product'], basis=serializer_p.validated_data['basis'],
+KeyError: 'product'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 948, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 431, in create
+    obj = self.model(**kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 500, in __init__
+    raise TypeError("%s() got an unexpected keyword argument '%s'" % (cls.__name__, kwarg))
+TypeError: PaintsLeads() got an unexpected keyword argument 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 133, in edit_paint
+    paint = serializer_p.save(name=name)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 967, in create
+    raise TypeError(msg)
+TypeError: Got a `TypeError` when calling `PaintsLeads.objects.create()`. This may be because you have a writable field on the serializer class that is not a valid argument to `PaintsLeads.objects.create()`. You may need to make the field read-only, or override the PaintsLeadsSerializerLink.create() method to handle this correctly.
+Original exception was:
+ Traceback (most recent call last):
+  File "/home/perespimka/monyze/amoapi/functions.py", line 127, in edit_paint
+    paint = Paints.objects.get(name=name, product=serializer_p.validated_data['product'], basis=serializer_p.validated_data['basis'],
+KeyError: 'product'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 948, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 431, in create
+    obj = self.model(**kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 500, in __init__
+    raise TypeError("%s() got an unexpected keyword argument '%s'" % (cls.__name__, kwarg))
+TypeError: PaintsLeads() got an unexpected keyword argument 'name'
+
+2020-05-08 15:15:47,639 DEBUG Using selector: EpollSelector
+2020-05-08 15:15:47,709 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/mysql/base.py", line 74, in execute
+    return self.cursor.execute(query, args)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/MySQLdb/cursors.py", line 209, in execute
+    res = self._query(query)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/MySQLdb/cursors.py", line 315, in _query
+    db.query(q)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/MySQLdb/connections.py", line 239, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.OperationalError: (1048, "Column 'lead_id' cannot be null")
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 137, in edit_paint
+    _ = serializer_pl.save(paint=paint)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 212, in save
+    self.instance = self.create(validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 948, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 433, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 745, in save
+    self.save_base(using=using, force_insert=force_insert,
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 782, in save_base
+    updated = self._save_table(
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 887, in _save_table
+    results = self._do_insert(cls._base_manager, using, fields, returning_fields, raw)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/base.py", line 924, in _do_insert
+    return manager._insert(
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/query.py", line 1204, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/models/sql/compiler.py", line 1384, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/utils.py", line 100, in execute
+    return super().execute(sql, params)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/utils.py", line 68, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/utils.py", line 77, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/utils.py", line 86, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/db/backends/mysql/base.py", line 79, in execute
+    raise utils.IntegrityError(*tuple(e.args))
+django.db.utils.IntegrityError: (1048, "Column 'lead_id' cannot be null")
+2020-05-08 15:27:41,158 DEBUG Using selector: EpollSelector
+2020-05-08 15:30:59,773 DEBUG Using selector: EpollSelector
+2020-05-08 15:35:38,341 DEBUG Using selector: EpollSelector
+2020-05-08 15:35:38,380 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 138, in edit_paint
+    logging.debug(serializer_pl.validated_data['id'])
+KeyError: 'id'
+2020-05-08 15:38:03,667 DEBUG Using selector: EpollSelector
+2020-05-08 15:38:03,671 DEBUG {'paints_leads_id': 9, 'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a', 'request_from': 'amo', 'state': 'edit', 'lead_id': 111, 'product_type': 'sample', 'name': '', 'product': 'Краска', 'delivery_date': '', 'delivery_terms': 'Не определено', 'potential_vol': '25', 'kp_price': '10', 'vol': '', 'price': '', 'basis': 'PE', 'catalog': 'RAL', 'code': '2213', 'shine': 'Не определено', 'facture': 'Гладкая', 'temperature': 'Стандарт', 'postforming': 0, 'applying': 'Не определено', 'surface_thin': '', 'surface_type': 'Не определено', 'comment': 'POLOVOY HUY', 'metallic': 0, 'chameleon': 0, 'antibacterial': 0, 'antigraffiti': 0, 'architect': 0, 'zinc': 0, 'id': 9}
+2020-05-08 15:38:03,671 DEBUG ********
+2020-05-08 15:38:03,673 DEBUG OrderedDict([('temperature', 'Стандарт'), ('applying', 'Не определено'), ('postforming', '0'), ('metallic', 0), ('chameleon', 0), ('antibacterial', 0), ('antigraffiti', 0), ('architect', 0), ('zinc', 0), ('comment', 'POLOVOY HUY'), ('product_type', 'sample')])
+2020-05-08 15:47:04,468 DEBUG request:
+2020-05-08 15:47:04,468 DEBUG application/json; charset=UTF-8
+2020-05-08 15:47:04,469 DEBUG {'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'id': []}
+2020-05-08 15:47:04,501 ERROR Internal Server Error: /amoapi/send_email
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 72, in send_email
+    send_mail_to_lab(request.data)
+  File "/home/perespimka/monyze/amoapi/views.py", line 44, in send_mail_to_lab
+    sample_data = data['sample_data'].copy()
+KeyError: 'sample_data'
+2020-05-08 15:53:54,703 DEBUG Using selector: EpollSelector
+2020-05-08 15:59:48,827 DEBUG Using selector: EpollSelector
+2020-05-08 15:59:48,833 DEBUG {'paints_leads_id': 9, 'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a', 'request_from': 'amo', 'state': 'edit', 'lead_id': 111, 'product_type': 'sample', 'name': '', 'product': 'Краска', 'delivery_date': '', 'delivery_terms': 'Не определено', 'potential_vol': '25', 'kp_price': '10', 'vol': '', 'price': '', 'basis': 'PE', 'catalog': 'RAL', 'code': '2213', 'shine': 'Не определено', 'facture': 'Гладкая', 'temperature': 'Стандарт', 'postforming': 0, 'applying': 'Не определено', 'surface_thin': '', 'surface_type': 'Не определено', 'comment': 'POLOVOY HUY', 'metallic': 0, 'chameleon': 0, 'antibacterial': 0, 'antigraffiti': 0, 'architect': 0, 'zinc': 0, 'id': 9}
+2020-05-08 15:59:48,833 DEBUG ********
+2020-05-08 15:59:48,837 DEBUG OrderedDict([('temperature', 'Стандарт'), ('applying', 'Не определено'), ('postforming', '0'), ('metallic', 0), ('chameleon', 0), ('antibacterial', 0), ('antigraffiti', 0), ('architect', 0), ('zinc', 0), ('comment', 'POLOVOY HUY'), ('product_type', 'sample')])
+2020-05-08 16:02:27,661 DEBUG Using selector: EpollSelector
+2020-05-08 16:02:27,664 DEBUG {'paints_leads_id': 9, 'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a', 'request_from': 'amo', 'state': 'edit', 'lead_id': 111, 'product_type': 'sample', 'name': '', 'product': 'Краска', 'delivery_date': '', 'delivery_terms': 'Не определено', 'potential_vol': '25', 'kp_price': '10', 'vol': '', 'price': '', 'basis': 'PE', 'catalog': 'RAL', 'code': '2213', 'shine': 'Не определено', 'facture': 'Гладкая', 'temperature': 'Стандарт', 'postforming': 0, 'applying': 'Не определено', 'surface_thin': '', 'surface_type': 'Не определено', 'comment': 'POLOVOY HUY', 'metallic': 0, 'chameleon': 0, 'antibacterial': 0, 'antigraffiti': 0, 'architect': 0, 'zinc': 0, 'id': 9}
+2020-05-08 16:02:27,664 DEBUG ********
+2020-05-08 16:02:27,667 DEBUG OrderedDict([('temperature', 'Стандарт'), ('applying', 'Не определено'), ('postforming', '0'), ('metallic', 0), ('chameleon', 0), ('antibacterial', 0), ('antigraffiti', 0), ('architect', 0), ('zinc', 0), ('comment', 'POLOVOY HUY'), ('product_type', 'sample')])
+2020-05-08 16:03:09,952 DEBUG Using selector: EpollSelector
+2020-05-08 16:03:09,957 DEBUG {'paints_leads_id': 9, 'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a', 'request_from': 'amo', 'state': 'edit', 'lead_id': 111, 'product_type': 'sample', 'name': '', 'product': 'Краска', 'delivery_date': '', 'delivery_terms': 'Не определено', 'potential_vol': '25', 'kp_price': '10', 'vol': '', 'price': '', 'basis': 'PE', 'catalog': 'RAL', 'code': '2213', 'shine': 'Не определено', 'facture': 'Гладкая', 'temperature': 'Стандарт', 'postforming': 0, 'applying': 'Не определено', 'surface_thin': '', 'surface_type': 'Не определено', 'comment': 'POLOVOY HUY', 'metallic': 0, 'chameleon': 0, 'antibacterial': 0, 'antigraffiti': 0, 'architect': 0, 'zinc': 0, 'id': 9}
+2020-05-08 16:03:09,957 DEBUG ********
+2020-05-08 16:03:09,997 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 139, in edit_paint
+    if serializer_pl.is_valid():
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 234, in is_valid
+    self._validated_data = self.run_validation(self.initial_data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 433, in run_validation
+    value = self.to_internal_value(data)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 486, in to_internal_value
+    for field in fields:
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 369, in _writable_fields
+    for field in self.fields.values():
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/utils/functional.py", line 48, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 363, in fields
+    for key, value in self.get_fields().items():
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 1038, in get_fields
+    field_names = self.get_field_names(declared_fields, info)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 1134, in get_field_names
+    assert field_name in fields, (
+AssertionError: The field 'id' was declared on serializer PaintsLeadsSerializerEdit, but has not been included in the 'fields' option.
+2020-05-08 16:19:53,849 DEBUG Using selector: EpollSelector
+2020-05-08 16:19:53,895 ERROR Internal Server Error: /amoapi/api/
+Traceback (most recent call last):
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 505, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 465, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 476, in raise_uncaught_exception
+    raise exc
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/views.py", line 502, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/perespimka/monyze/amoapi/views.py", line 98, in api
+    return Response(edit_paint(req))
+  File "/home/perespimka/monyze/amoapi/functions.py", line 140, in edit_paint
+    serializer_pl.save(paint=paint)
+  File "/home/perespimka/monyze/venv/lib/python3.8/site-packages/rest_framework/serializers.py", line 177, in save
+    assert hasattr(self, '_errors'), (
+AssertionError: You must call `.is_valid()` before calling `.save()`.
+2020-05-08 16:20:38,589 DEBUG Using selector: EpollSelector
+2020-05-08 16:21:38,468 DEBUG request:
+2020-05-08 16:21:38,469 DEBUG application/json; charset=UTF-8
+2020-05-08 16:21:38,469 DEBUG {'state': 'set_score', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'old_id': '6389447', 'new_id': 6517161, 'id': ['285', '281']}
+2020-05-08 16:23:41,235 DEBUG Using selector: EpollSelector
+2020-05-08 16:23:52,600 WARNING Method Not Allowed: /amoapi/api/leads/
+2020-05-08 16:25:12,542 DEBUG request:
+2020-05-08 16:25:12,542 DEBUG application/json; charset=UTF-8
+2020-05-08 16:25:12,542 DEBUG {'state': 'set_score', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 'old_id': '6389447', 'new_id': 6517849, 'id': ['285', '281', '280']}
+2020-05-08 16:25:42,560 DEBUG Using selector: EpollSelector
+2020-05-08 16:25:52,639 WARNING Method Not Allowed: /amoapi/leads/

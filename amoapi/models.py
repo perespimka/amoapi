@@ -20,7 +20,7 @@ class Paints(models.Model):
     class Meta:
         db_table = 'paints'
 
-class PaintsLeads(models.Model):
+class PaintsLeads(models.Model): #Сюда добавить поле статус: 0 - товар(дефолт), 1- образц, 2 - заказ
     paint = models.ForeignKey(Paints, on_delete=models.CASCADE)
     lead = models.ForeignKey(Leads, on_delete=models.CASCADE)
     date_add = models.DateTimeField(auto_now_add=True, blank=True, null=True)

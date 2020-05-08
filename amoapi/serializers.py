@@ -28,3 +28,11 @@ class PaintsLeadsSerializerLink(serializers.ModelSerializer):
         fields = ('temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
                   'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type' 
         )
+
+class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    class Meta:
+        model = PaintsLeads
+        fields = ('id', 'temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
+                  'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type' 
+        )

@@ -1,5 +1,5 @@
 from .models import Leads, Paints, PaintsLeads
-from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink
+from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink, PaintsLeadsSerializerEdit
 import logging
 from django.http import HttpResponse
 
@@ -27,6 +27,9 @@ NAME_SWITCH = {
 
 
 def get_lead_data(req):
+    '''
+    Возвращаем данные по сделке
+    '''
     try:
         lead = Leads.objects.get(amo_lead_id=req['lead_id'])
     except Leads.DoesNotExist:
@@ -61,27 +64,31 @@ def name_switch(name):
         return NAME_SWITCH[name]
     return name
 
+def get_paint_name(req):
+    return (name_switch(req['catalog']) + req['code'] + '-' + req['basis'] + '-' + name_switch(req['shine']) +
+                    '-' + name_switch(req['facture'])
+    )
 
 def attach_goods(req):
-    if req['product_type'] == 'sample' and all((req['product'], req['basis'], req['catalog'], req['code'], req['shine'], req['facture'])):
+    '''
+    Запись краски и дополнительных данных в paints и paints_leads
+    '''
+    if all((req['product'], req['basis'], req['catalog'], req['code'], req['shine'], req['facture'])):
         serialize_p = PaintsSerializerLink(data=req)
         if serialize_p.is_valid():
-            name = (name_switch(req['catalog']) + req['code'] + '-' + req['basis'] + '-' + name_switch(req['shine']) +
-                    '-' + name_switch(req['facture'])
-            ) 
+            name = get_paint_name(req)
             try:
-                paint = Paints.objects.get(name=name, product=req['product'], basis=req['basis'],
-                                           catalog=req['catalog'], code=req['code'], shine=req['shine'],
-                                           facture=req['facture']
+                paint = Paints.objects.get(name=name, product=serialize_p.validated_data['product'], basis=serialize_p.validated_data['basis'],
+                                           catalog=serialize_p.validated_data['catalog'], code=serialize_p.validated_data['code'], shine=serialize_p.validated_data['shine'],
+                                           facture=serialize_p.validated_data['facture']
                 )
             except:
                 paint = serialize_p.save(name=name)
-          
 
         try:
             lead = Leads.objects.get(amo_lead_id=req['lead_id'])
         except:
-            lead = Leads(amo_lead_id=req['lead_id']) #Уточнить, устроит ли такое
+            lead = Leads(amo_lead_id=req['lead_id']) 
             lead.save()
         serialize_pl = PaintsLeadsSerializerLink(data=req)
         if serialize_pl.is_valid():
@@ -92,7 +99,56 @@ def attach_goods(req):
             result.append(f'Образец {pl.paint.product} {pl.paint.catalog}{pl.paint.code}')      
         result = ','.join(result)
 
+        return {'status': 'done', 'tags': result} # Так просит фронт 
+
+def del_paintsleads_rec(req):
+    '''
+    Удаляем запись в paints_leads
+    '''
+    try:
+        pl = PaintsLeads.objects.get(id=req['paints_leads_id'])
+    except:
+        return {'status': 'not ok'}
+    pl.delete()
+    lead = Leads.objects.get(amo_lead_id=req['lead_id'])
+    result = []
+    for pl in lead.paintsleads_set.all():
+        res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
+        result.append(res_string)
+    result = ','.join(result)
+    return {'status': 'done', 'tags': result}
+    
+def edit_paint(req):
+    if all((req['lead_id'], req['paints_leads_id'])):
+        name = get_paint_name(req)
+        serializer_p = PaintsSerializerLink(data=req)
+        if serializer_p.is_valid():
+            try:
+                paint = Paints.objects.get(name=name, product=serializer_p.validated_data['product'], basis=serializer_p.validated_data['basis'],
+                                           catalog=serializer_p.validated_data['catalog'], code=serializer_p.validated_data['code'], 
+                                           shine=serializer_p.validated_data['shine'], facture=serializer_p.validated_data['facture']
+                                           
+                )
+            except:
+                paint = serializer_p.save(name=name)
+        lead = Leads.objects.get(amo_lead_id=req['lead_id'])
+        try:
+            pl = PaintsLeads.objects.get(id=req['paints_leads_id']) #!!!
+        except:
+            return {'status': 'omg  paints_leads id not found'}
+        serializer_pl = PaintsLeadsSerializerEdit(pl, data=req)
+        if serializer_pl.is_valid():
+            serializer_pl.save(paint=paint)
+        result = []
+        for pl in lead.paintsleads_set.all():
+            res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
+            if pl.product_type == 'sample':
+                res_string = f'Образец {res_string}'
+            result.append(res_string)
+        result = ','.join(result)
         return {'status': 'done', 'tags': result}
+        
+    
 
 if __name__ == "__main__":
     print(name_switch('RAL'))

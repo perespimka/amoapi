@@ -7,7 +7,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG, filename='log_test_request.txt', format='%(asctime)s %(levelname)s %(message)s')
 URL = 'https://api.stardustpaints.ru/amoapi/send_email'
-URL2 = 'https://api.stardustpaints.ru/amoapi/api/'
+URL2 = 'https://api.stardustpaints.ru/amoapi/leads/'
 
 to_send = {
     'state': 'send_prod',
@@ -58,8 +58,49 @@ to_send_3 = {
     "architect": 0,
     "zinc": 0
 }
+delete_pl = {
+    'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a',
+    'request_from': 'amo',
+    'state': 'unlink',
+    'lead_id': 131,
+    'paints_leads_id': 10
+}
+
+edit = {
+    'paints_leads_id': 9,
+    "api_key": "Hvdtygevzr52unsrabsr5q1gA#a",
+    "request_from": "amo",
+    "state": "edit",
+    "lead_id": 111,
+    "product_type": "sample",
+    "name": "",
+    "product": "Краска",
+    "delivery_date": "",
+    "delivery_terms": "Не определено",
+    "potential_vol": "25",
+    "kp_price": "10",
+    "vol": "",
+    "price": "",
+    "basis": "PE",
+    "catalog": "RAL",
+    "code": "2213",
+    "shine": "Не определено",
+    "facture": "Гладкая",
+    "temperature": "Стандарт",
+    "postforming": 0,
+    "applying": "Не определено",
+    "surface_thin": "",
+    "surface_type": "Не определено",
+    "comment": "POLOVOY HUY",
+    "metallic": 0,
+    "chameleon": 0,
+    "antibacterial": 0,
+    "antigraffiti": 0,
+    "architect": 0,
+    "zinc": 0
+}
 def send_request():
-    a = requests.post(URL2, json=to_send_3)
+    a = requests.post(URL2, json=edit)
     print(a)
     print(a.text)
     logging.debug(a.text)

@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 import time
-from .functions import get_lead_data, attach_goods
+from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint
 from .tokenz import api_key
 from .models import Leads
 from rest_framework.response import Response
@@ -92,3 +92,8 @@ def api(request):
             result = attach_goods(req)
             logging.debug(result)
             return Response(result)
+        elif req['state'] == 'unlink':
+            return Response(del_paintsleads_rec(req))
+        elif req['state'] == 'edit':
+            return Response(edit_paint(req))
+            
