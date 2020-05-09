@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 import time
-from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint
+from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint, get_paint_info, paint_search
 from .tokenz import api_key
 from .models import Leads
 from rest_framework.response import Response
@@ -75,7 +75,7 @@ def send_email(request):
 
 
 @api_view(['POST'])
-def api(request):
+def leads(request):
     req = request.data
     if not api_key == req['api_key']:
         return HttpResponse('<h1>Nice try :D</h1>')
@@ -96,4 +96,15 @@ def api(request):
             return Response(del_paintsleads_rec(req))
         elif req['state'] == 'edit':
             return Response(edit_paint(req))
-            
+
+@api_view(['POST'])
+def paints(request):
+    req = request.data
+    if not api_key == req['api_key']:
+        return HttpResponse('<h1>Nice try :D</h1>')
+    if req['request_from'] == 'amo':
+        if req['state'] == 'get_paint_info':
+            return Response(get_paint_info(req))
+        if req['state'] == 'search' and len(req['query']) >= 2:
+            return Response(paint_search(req))
+

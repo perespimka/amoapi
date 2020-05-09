@@ -42,7 +42,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     delivery_date = models.CharField(max_length=45, blank=True, null=True)
     delivery_terms = models.CharField(max_length=45, blank=True, null=True)
     product_type = models.CharField(max_length=45, blank=True, null=True)
-    status = models.CharField(max_length=45, blank=True, null=True)
+    status = models.IntegerField(default=0, blank=True, null=True)
     reason = models.CharField(max_length=45, blank=True, null=True)
     surface = models.CharField(max_length=45, blank=True, null=True)
     panels = models.IntegerField(blank=True, null=True)

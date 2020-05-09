@@ -36,3 +36,11 @@ class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
         fields = ('id', 'temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
                   'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type' 
         )
+
+class PaintsLeadsFullSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaintsLeads
+
+class PaintsFullSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Paints

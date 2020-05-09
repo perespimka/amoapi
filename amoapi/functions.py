@@ -2,6 +2,9 @@ from .models import Leads, Paints, PaintsLeads
 from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink, PaintsLeadsSerializerEdit
 import logging
 from django.http import HttpResponse
+from .serializers import PaintsFullSerializer, PaintsLeadsFullSerializer
+from django.db.models import Q
+
 
 logging.basicConfig(level=logging.DEBUG, filename='/home/perespimka/monyze/log.txt', format='%(asctime)s %(levelname)s %(message)s')
 NAME_SWITCH = {
@@ -147,8 +150,36 @@ def edit_paint(req):
             result.append(res_string)
         result = ','.join(result)
         return {'status': 'done', 'tags': result}
+
+def get_paint_info(req):
+    if req['paints_leads_id']:
+        try:
+            pl = PaintsLeads.objects.get(id=req['paints_leads_id'])
+        except:
+            return {'status': 'paints_leads_id not found'}
+        paint = pl.paint
+        serializer_pl = PaintsLeadsFullSerializer(pl)
+        serializer_p = PaintsFullSerializer(paint)
+        serializer_p.data.update(serializer_pl.data)
+        return serializer_p.data
+    elif req['paint_id']:
+        try:
+            paint = Paints.objects.get(id=req['paint_id'])
+        except:
+            return {'status': 'paint_id not found'}
+        return PaintsFullSerializer(paint).data
+
+def paint_search(req):
+    query = req['query']
+    q = (
+        Q(name__icontains=query) | Q(product__icontains=query) | Q(basis__icontains=query) | Q(catalog__icontains=query) |
+        Q(code__icontains=query) | Q(shine__icontains=query) | Q(facture__icontains=query)
+    )
+    result = []
+    for paint in Paints.objects.filter(q):
+        result.append({'id': paint.id, 'name': paint.name})
+    return result
         
-    
 
 if __name__ == "__main__":
     print(name_switch('RAL'))
