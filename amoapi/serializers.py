@@ -40,7 +40,9 @@ class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
 class PaintsLeadsFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaintsLeads
+        fields = ('__all__')
 
 class PaintsFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paints
+        fields = ('__all__')

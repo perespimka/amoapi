@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.DEBUG, filename='log_test_request.txt', format='%(asctime)s %(levelname)s %(message)s')
 URL = 'https://api.stardustpaints.ru/amoapi/send_email'
 URL2 = 'https://api.stardustpaints.ru/amoapi/leads/'
-
+URL3 = 'https://api.stardustpaints.ru/amoapi/paints/'
 to_send = {
     'state': 'send_prod',
     'sample_data':{
@@ -99,8 +99,17 @@ edit = {
     "architect": 0,
     "zinc": 0
 }
+
+search = {
+    'api_key': 'Hvdtygevzr52unsrabsr5q1gA#a',
+    'request_from': 'amo',
+    'state': 'get_paint_info',
+    'lead_id': 131,
+    'paints_leads_id': 9,
+    'query': 'RAL'
+}
 def send_request():
-    a = requests.post(URL2, json=edit)
+    a = requests.post(URL3, json=search)
     print(a)
     print(a.text)
     logging.debug(a.text)

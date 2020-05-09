@@ -96,6 +96,7 @@ def leads(request):
             return Response(del_paintsleads_rec(req))
         elif req['state'] == 'edit':
             return Response(edit_paint(req))
+    return HttpResponse('lalala')
 
 @api_view(['POST'])
 def paints(request):
