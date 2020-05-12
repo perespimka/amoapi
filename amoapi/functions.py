@@ -1,3 +1,6 @@
+from django.core.mail import EmailMessage
+from django.core.mail.backends.smtp import EmailBackend
+import time
 from .models import Leads, Paints, PaintsLeads
 from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink, PaintsLeadsSerializerEdit
 import logging
@@ -28,6 +31,13 @@ NAME_SWITCH = {
     "Не определено": "н/о",
     }
 
+def combine_paint_data(pl):
+    '''Возвращает словарь объединенный paints и paints_leads'''
+    serializer_pl = PaintsLeadsFullSerializer(pl).data
+    serializer_p = PaintsFullSerializer(pl.paint).data
+    serializer_p.update(serializer_pl)
+    return serializer_p
+
 
 def get_lead_data(req):
     '''
@@ -47,10 +57,8 @@ def get_lead_data(req):
                 sum_ += pl.price * pl.vol # Тут уточнить по обязательности заполнения полей
             except:
                 pass
-            paint = PaintsSerializer(pl.paint).data
-            pl_serz = PaintsLeadsSerializer(pl).data
-            pl_serz.update(paint)
-            serializer.append(pl_serz)
+            combined = combine_paint_data(pl)
+            serializer.append(combined)
         
     else:
         serializer = 'none' # На фронте так надо. Там ждут именно строку 'none', а не json'овский null
@@ -157,11 +165,8 @@ def get_paint_info(req):
             pl = PaintsLeads.objects.get(id=req['paints_leads_id'])
         except:
             return {'status': 'paints_leads_id not found'}
-        paint = pl.paint
-        serializer_pl = PaintsLeadsFullSerializer(pl)
-        serializer_p = PaintsFullSerializer(paint)
-        serializer_p.data.update(serializer_pl.data)
-        return serializer_p.data
+
+        return combine_paint_data(pl)
     elif req['paint_id']:
         try:
             paint = Paints.objects.get(id=req['paint_id'])
@@ -179,7 +184,80 @@ def paint_search(req):
     for paint in Paints.objects.filter(q):
         result.append({'id': paint.id, 'name': paint.name})
     return result
-        
+#*******   
+"""
+def prepare_dict_to_DF(sample_data):
+    '''Заменим значения на списки, содержащие эти значения, для создания DataFrame'''
+    for key in list(sample_data):
+        logging.debug('++++++++'*3)
+        logging.debug(sample_data[key])
+        sample_data[key] = [sample_data[key]]
+        logging.debug(sample_data[key])
+        logging.debug('--------'*3)
+"""
+def sample_data_to_xlsx(paints_to_xlsx):
+    '''
+    Создаем файл xlsx с данными образца для отправки в лабораторию
+    Возвращаем имя файла
+    '''
+    import pandas as pd
+    df_sample_data = pd.DataFrame(paints_to_xlsx)
+    str_time = str(int(time.time()*1000)) + '.xlsx'
+    fname = 'mail_files/' + str_time 
+    df_sample_data.to_excel(fname, index=None)
+    return fname
+
+
+
+def send_mail_to(req, emails, attach):
+    import base64
+
+    #sample_data = data['sample_data'].copy()
+    manager_mail = base64.b64decode(req['manager_mail'].encode()).decode('utf-8')
+    manager_mail_pass = base64.b64decode(req['manager_mail_pass'].encode()).decode('utf-8')
+    #attach = sample_data_to_xlsx(sample_data)
+    em = EmailMessage(subject='Создать образец', body='Просьба создать образец, данные во вложении',
+                      to=emails, from_email=manager_mail
+    )
+
+    em.attach_file(attach)
+    EmailBackend(
+        host = 'mail.stardustpaints.ru',
+        username = manager_mail,
+        password = manager_mail_pass,
+        #use_ssl = True,
+        use_tls = True,
+        port = 587
+    ).send_messages([em])    
+
+def send_mail_to_lab_prod(req):
+    if req['state'] == 'send_lab':
+        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'] # Изменить на лабу
+        status_value = 1
+    else:
+        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'] # Изменить на бэкофис
+        status_value = 2
+    lead = Leads.objects.get(amo_lead_id=req['old_id'])
+    lead.new_lead_id = req['new_id']
+    lead.save()
+    new_lead = Leads(amo_lead_id=req['new_id'])
+    new_lead.save()
+    paints_to_xlsx = []
+    for pl_id in req['id']:
+        pl = PaintsLeads.objects.get(id=pl_id)
+        pl.status = status_value
+        pl.save()
+        pl.id = None
+        pl.lead = new_lead
+        pl.save()
+        paints_to_xlsx.append(combine_paint_data(pl))
+    attach = sample_data_to_xlsx(paints_to_xlsx)
+    send_mail_to(req, emails, attach)
+    
+    
+    
+    
+
 
 if __name__ == "__main__":
     print(name_switch('RAL'))

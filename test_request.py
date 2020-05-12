@@ -9,6 +9,7 @@ logging.basicConfig(level=logging.DEBUG, filename='log_test_request.txt', format
 URL = 'https://api.stardustpaints.ru/amoapi/send_email'
 URL2 = 'https://api.stardustpaints.ru/amoapi/leads/'
 URL3 = 'https://api.stardustpaints.ru/amoapi/paints/'
+
 to_send = {
     'state': 'send_prod',
     'sample_data':{
@@ -79,21 +80,21 @@ edit = {
     "delivery_terms": "Не определено",
     "potential_vol": "25",
     "kp_price": "10",
-    "vol": "",
+    "vol": "13",
     "price": "",
     "basis": "PE",
     "catalog": "RAL",
     "code": "2213",
-    "shine": "Не определено",
+    "shine": "ЖОПО",
     "facture": "Гладкая",
     "temperature": "Стандарт",
     "postforming": 0,
     "applying": "Не определено",
     "surface_thin": "",
-    "surface_type": "Не определено",
+    "surface_type": "ЖОПО",
     "comment": "POLOVOY HUY",
-    "metallic": 0,
-    "chameleon": 0,
+    "metallic": 1,
+    "chameleon": 1,
     "antibacterial": 0,
     "antigraffiti": 0,
     "architect": 0,
@@ -108,8 +109,14 @@ search = {
     'paints_leads_id': 9,
     'query': 'RAL'
 }
+send_email_to_lab = {
+    'state': 'send_lab', 'manager_mail': 'c29sb3ZpZXZAc3RhcmR1c3RwYWludHMucnU=', 'manager_mail_pass': 'MzNLZ3RzbDEx', 
+    'old_id': '111', 'new_id': 561, 'id': ['3', '4', '5', '7', '8', '9'], 
+    'data_manager': {'man_login': 'stardustpaintsamo@mail.ru', 'man_name': 'Дмитрий', 'man_last_name': '', 'man_phone_number': ''
+    }
+}
 def send_request():
-    a = requests.post(URL3, json=search)
+    a = requests.post(URL, json=send_email_to_lab)
     print(a)
     print(a.text)
     logging.debug(a.text)

@@ -4,6 +4,7 @@ from django.db import models
 class Leads(models.Model):
     amo_lead_id = models.IntegerField(unique=True)
     user_id = models.IntegerField(blank=True, null=True)
+    new_lead_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         db_table = 'leads'

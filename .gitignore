@@ -7,4 +7,10 @@ __pycache__
 .vscode
 tokenz.py
 settings.py
+migrations/
+описание.txt
+.sock
+log.txt
+test*.py
+
 
