@@ -16,7 +16,7 @@ def send_email(request):
     logging.debug('request:')
     logging.debug(request.content_type)
     logging.debug(request.data)
-    if request.data['state'] == 'send_lab' or request.data['state'] == 'send_prod':
+    if request.data['state'] == 'send_lab' or request.data['state'] == 'send_prod' or request.data['state'] == 'set_score':
         send_mail_to_lab_prod(request.data)
         #send_mail_to(request.data)
 

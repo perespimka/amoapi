@@ -4,7 +4,7 @@ from django.db import models
 class Leads(models.Model):
     amo_lead_id = models.IntegerField(unique=True)
     user_id = models.IntegerField(blank=True, null=True)
-    new_lead_id = models.IntegerField(blank=True, null=True)
+    
 
     class Meta:
         db_table = 'leads'
@@ -24,6 +24,7 @@ class Paints(models.Model):
 class PaintsLeads(models.Model): #Сюда добавить поле статус: 0 - товар(дефолт), 1- образц, 2 - заказ
     paint = models.ForeignKey(Paints, on_delete=models.CASCADE)
     lead = models.ForeignKey(Leads, on_delete=models.CASCADE)
+    new_lead = models.ForeignKey(Leads, on_delete=models.CASCADE, related_name='new_lead', blank=True, null=True)
     date_add = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     temperature = models.CharField(max_length=45, blank=True, null=True)
     applying = models.CharField(max_length=45, blank=True, null=True)
@@ -35,9 +36,8 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     architect = models.IntegerField(blank=True, null=True)
     zinc = models.IntegerField(blank=True, null=True)
     client_sample = models.CharField(max_length=45, blank=True, null=True)
+    status_sample = models.CharField(max_length=45, blank=True, null=True)
     comment = models.CharField(max_length=45, blank=True, null=True)
-    potential_vol = models.IntegerField(blank=True, null=True)
-    kp_price = models.IntegerField(blank=True, null=True)
     vol = models.FloatField(blank=True, null=True)
     price = models.FloatField(blank=True, null=True)
     delivery_date = models.CharField(max_length=45, blank=True, null=True)

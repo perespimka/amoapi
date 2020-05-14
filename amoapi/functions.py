@@ -3,6 +3,7 @@ from django.core.mail.backends.smtp import EmailBackend
 import time
 from .models import Leads, Paints, PaintsLeads
 from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink, PaintsLeadsSerializerEdit
+from .serializers import PaintsLeadsEmailSerializer
 import logging
 from django.http import HttpResponse
 from .serializers import PaintsFullSerializer, PaintsLeadsFullSerializer
@@ -31,13 +32,16 @@ NAME_SWITCH = {
     "Не определено": "н/о",
     }
 
-def combine_paint_data(pl):
+def combine_paint_data(pl, PlSerializator, PSerializator):
     '''Возвращает словарь объединенный paints и paints_leads'''
-    serializer_pl = PaintsLeadsFullSerializer(pl).data
-    serializer_p = PaintsFullSerializer(pl.paint).data
+    serializer_pl = PlSerializator(pl).data
+    serializer_p = PSerializator(pl.paint).data
     serializer_p.update(serializer_pl)
     return serializer_p
 
+def add_new_lead_id(pl, dict_to_add):
+    new_id = pl.new_lead.amo_lead_id
+    dict_to_add['new_lead_id'] = new_id
 
 def get_lead_data(req):
     '''
@@ -57,7 +61,12 @@ def get_lead_data(req):
                 sum_ += pl.price * pl.vol # Тут уточнить по обязательности заполнения полей
             except:
                 pass
-            combined = combine_paint_data(pl)
+            combined = combine_paint_data(pl, PaintsLeadsSerializer, PaintsSerializer)
+            if pl.new_lead:
+                combined['new_lead_id'] = pl.new_lead.amo_lead_id
+            else:
+                combined['new_lead_id'] = None
+
             serializer.append(combined)
         
     else:
@@ -86,6 +95,7 @@ def attach_goods(req):
     '''
     if all((req['product'], req['basis'], req['catalog'], req['code'], req['shine'], req['facture'])):
         serialize_p = PaintsSerializerLink(data=req)
+        logging.debug(req['shine'])
         if serialize_p.is_valid():
             name = get_paint_name(req)
             try:
@@ -107,7 +117,10 @@ def attach_goods(req):
         pls = lead.paintsleads_set.all() # Все записи в paints_leads у текущего лида
         result = []
         for pl in pls:
-            result.append(f'Образец {pl.paint.product} {pl.paint.catalog}{pl.paint.code}')      
+            res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
+            if pl.product_type == 'sample':
+                res_string = f'Образец {res_string}'            
+            result.append(res_string)      
         result = ','.join(result)
 
         return {'status': 'done', 'tags': result} # Так просит фронт 
@@ -130,18 +143,24 @@ def del_paintsleads_rec(req):
     return {'status': 'done', 'tags': result}
     
 def edit_paint(req):
+    '''
+    Редактирование краски
+    '''
     if all((req['lead_id'], req['paints_leads_id'])):
         name = get_paint_name(req)
         serializer_p = PaintsSerializerLink(data=req)
+        logging.debug(req)
         if serializer_p.is_valid():
             try:
-                paint = Paints.objects.get(name=name, product=serializer_p.validated_data['product'], basis=serializer_p.validated_data['basis'],
-                                           catalog=serializer_p.validated_data['catalog'], code=serializer_p.validated_data['code'], 
-                                           shine=serializer_p.validated_data['shine'], facture=serializer_p.validated_data['facture']
+                paint = Paints.objects.get(name=name, product=req['product'], basis=req['basis'],
+                                           catalog=req['catalog'], code=req['code'], 
+                                           shine=req['shine'], facture=req['facture']
                                            
                 )
             except:
                 paint = serializer_p.save(name=name)
+        else:
+            logging.debug(serializer_p.errors)
         lead = Leads.objects.get(amo_lead_id=req['lead_id'])
         try:
             pl = PaintsLeads.objects.get(id=req['paints_leads_id']) #!!!
@@ -150,6 +169,8 @@ def edit_paint(req):
         serializer_pl = PaintsLeadsSerializerEdit(pl, data=req)
         if serializer_pl.is_valid():
             serializer_pl.save(paint=paint)
+        else:
+            logging.debug(serializer_pl.errors)
         result = []
         for pl in lead.paintsleads_set.all():
             res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
@@ -160,14 +181,17 @@ def edit_paint(req):
         return {'status': 'done', 'tags': result}
 
 def get_paint_info(req):
-    if req['paints_leads_id']:
+    '''
+    Данные по краске. Запрос на /paints
+    '''
+    if 'paints_leads_id' in req:
         try:
             pl = PaintsLeads.objects.get(id=req['paints_leads_id'])
         except:
             return {'status': 'paints_leads_id not found'}
 
-        return combine_paint_data(pl)
-    elif req['paint_id']:
+        return combine_paint_data(pl, PaintsLeadsFullSerializer, PaintsFullSerializer)
+    elif 'paint_id' in req:
         try:
             paint = Paints.objects.get(id=req['paint_id'])
         except:
@@ -175,6 +199,9 @@ def get_paint_info(req):
         return PaintsFullSerializer(paint).data
 
 def paint_search(req):
+    '''
+    ПОиск краски. 
+    '''
     query = req['query']
     q = (
         Q(name__icontains=query) | Q(product__icontains=query) | Q(basis__icontains=query) | Q(catalog__icontains=query) |
@@ -185,16 +212,7 @@ def paint_search(req):
         result.append({'id': paint.id, 'name': paint.name})
     return result
 #*******   
-"""
-def prepare_dict_to_DF(sample_data):
-    '''Заменим значения на списки, содержащие эти значения, для создания DataFrame'''
-    for key in list(sample_data):
-        logging.debug('++++++++'*3)
-        logging.debug(sample_data[key])
-        sample_data[key] = [sample_data[key]]
-        logging.debug(sample_data[key])
-        logging.debug('--------'*3)
-"""
+
 def sample_data_to_xlsx(paints_to_xlsx):
     '''
     Создаем файл xlsx с данными образца для отправки в лабораторию
@@ -237,20 +255,22 @@ def send_mail_to_lab_prod(req):
     else:
         emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'] # Изменить на бэкофис
         status_value = 2
-    lead = Leads.objects.get(amo_lead_id=req['old_id'])
-    lead.new_lead_id = req['new_id']
-    lead.save()
     new_lead = Leads(amo_lead_id=req['new_id'])
-    new_lead.save()
+    try:
+        new_lead.save()
+    except:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     paints_to_xlsx = []
     for pl_id in req['id']:
         pl = PaintsLeads.objects.get(id=pl_id)
         pl.status = status_value
+        pl.new_lead = new_lead
         pl.save()
         pl.id = None
         pl.lead = new_lead
+        pl.new_lead = None
         pl.save()
-        paints_to_xlsx.append(combine_paint_data(pl))
+        paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
     attach = sample_data_to_xlsx(paints_to_xlsx)
     send_mail_to(req, emails, attach)
     

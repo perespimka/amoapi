@@ -10,10 +10,10 @@ class PaintsSerializer(serializers.ModelSerializer):
 
 
 class PaintsLeadsSerializer(serializers.ModelSerializer):
-    paint_data = PaintsSerializer(read_only=True, many=True)
+    date_add = serializers.DateTimeField(format='%d-%m-%Y', read_only=True)
     class Meta:
         model = PaintsLeads
-        fields = ('id', 'product_type', 'date_add', 'kp_price', 'price', 'potential_vol', 'vol', 'paint_data' )
+        fields = ('id', 'product_type', 'date_add',  'price',  'vol', 'status',  )
     
 #Для link
 class PaintsSerializerLink(serializers.ModelSerializer):
@@ -25,25 +25,39 @@ class PaintsLeadsSerializerLink(serializers.ModelSerializer):
 
     class Meta:
         model = PaintsLeads
-        fields = ('temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
-                  'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type' 
+        fields = ('temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', #"potential_vol", "kp_price",
+                  'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type',
+                  'surface_type', "surface_thin", "delivery_date", "delivery_terms", "vol", "price", 'ntime_applying',
+                  "status_sample", 
         )
-
+# Edit
 class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     class Meta:
         model = PaintsLeads
         fields = ('id', 'temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
-                  'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type' 
+                  'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type', 
+                  'surface_type', "surface_thin", "delivery_date", "delivery_terms", "vol", "price", 'ntime_applying',
+                  "status_sample", 
+
         )
 
+#Full
 class PaintsLeadsFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaintsLeads
-        #fields = ('__all__')
-        exclude = ('id', 'lead', 'paint', 'date_add')
+        fields = ('__all__')
+        #exclude = ('lead', 'paint', 'date_add')
 
 class PaintsFullSerializer(serializers.ModelSerializer):
     class Meta:
         model = Paints
-        exclude = ('id',)
+        fields = ('__all__')
+        #exclude = ('id',)
+
+#ForEmail
+class PaintsLeadsEmailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PaintsLeads
+        #fields = ('__all__')
+        exclude = ('id', 'lead', 'paint', 'date_add', 'new_lead'  )
