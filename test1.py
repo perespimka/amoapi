@@ -1,27 +1,21 @@
-NAME_SWITCH = {
-    "ral": "RAL",
-    "ral design": "RALD",
-    "ral classic": "RALC",
-    "ral effect": "RALE",
-    "nsc": "NCS",
-    "pantone": "PNT",
-    "Глянцевая 80-100%": "80/100%",
-    "Полулянцевая 55-80%": "55/80%", 
-    "Полуматовая 30-55%": "30/55%",
-    "Матовая 15-30%": "15/30%",
-    "Суперматовая 1-15%": "1-15%", 
-    "Шагрень": "шгр",
-    "Гладкая": "гл",
-    "Антик": "ант",
-    "Муар": "мр",
-    "Молотковая": "мтк",
-    "Шелк": "шлк",
-    "Не определено": "н/о",
+from docxtpl import DocxTemplate
+
+
+def test_temlp():
+    doc = DocxTemplate('TEST.docx')
+    context = {
+        'position_from_card': 'sex v govno', 
+        'tbl': [
+            {'col1': 'val1', 'col2': 'val2', 'col3': 'val3' }, 
+            {'col1': 'val1a', 'col2': 'val2a', 'col3': 'val3a' }
+        ]
     }
-def name_switch(name):
-    if name in NAME_SWITCH:
-        return NAME_SWITCH[name]
-    return name
+
+
+
+    doc.render(context)
+    doc.save('vgovno_tab.docx')
+
 
 if __name__ == "__main__":
-    print(name_switch('RAL'))
+    test_temlp()

@@ -39,6 +39,12 @@ def combine_paint_data(pl, PlSerializator, PSerializator):
     serializer_p.update(serializer_pl)
     return serializer_p
 
+def tag_creating(pl):
+    res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
+    if pl.product_type == 'sample':
+        res_string = f'Образец {res_string}' 
+    return res_string
+
 def add_new_lead_id(pl, dict_to_add):
     new_id = pl.new_lead.amo_lead_id
     dict_to_add['new_lead_id'] = new_id
@@ -66,7 +72,7 @@ def get_lead_data(req):
                 combined['new_lead_id'] = pl.new_lead.amo_lead_id
             else:
                 combined['new_lead_id'] = None
-
+            combined['tag'] = tag_creating(pl)
             serializer.append(combined)
         
     else:
@@ -78,6 +84,12 @@ def get_lead_data(req):
         'lead_paints_info': serializer
     }
     return result
+
+def set_status(pl, req):
+    if req['product_type'] == 'sample':
+        pl.status = 1
+    elif req['product_type'] == 'paint':
+        pl.status = 0
 
 def name_switch(name):
     if name in NAME_SWITCH:
@@ -95,7 +107,7 @@ def attach_goods(req):
     '''
     if all((req['product'], req['basis'], req['catalog'], req['code'], req['shine'], req['facture'])):
         serialize_p = PaintsSerializerLink(data=req)
-        logging.debug(req['shine'])
+        logging.debug(req)
         if serialize_p.is_valid():
             name = get_paint_name(req)
             try:
@@ -105,7 +117,8 @@ def attach_goods(req):
                 )
             except:
                 paint = serialize_p.save(name=name)
-
+        else:
+            logging.debug(serialize_p.errors)
         try:
             lead = Leads.objects.get(amo_lead_id=req['lead_id'])
         except:
@@ -114,6 +127,9 @@ def attach_goods(req):
         serialize_pl = PaintsLeadsSerializerLink(data=req)
         if serialize_pl.is_valid():
             serialize_pl.save(lead=lead, paint=paint)
+        else:
+            logging.debug(serialize_pl.errors)
+        
         pls = lead.paintsleads_set.all() # Все записи в paints_leads у текущего лида
         result = []
         for pl in pls:
@@ -274,7 +290,8 @@ def send_mail_to_lab_prod(req):
     attach = sample_data_to_xlsx(paints_to_xlsx)
     send_mail_to(req, emails, attach)
     
-    
+def send_cp(req):
+    pass    
     
     
 

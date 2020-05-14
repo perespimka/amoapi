@@ -141,7 +141,7 @@ send_email_to_lab = {
 }
 paint_info = {"api_key":"Hvdtygevzr52unsrabsr5q1gA#a","request_from":"amo","state":"get_paint_info","paint_id":"10"}
 def send_request():
-    a = requests.post(URL3, json=paint_info)
+    a = requests.post(URL2, json=to_send_2)
     print(a)
     print(a.text)
     logging.debug(a.text)

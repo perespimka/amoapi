@@ -38,7 +38,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     client_sample = models.CharField(max_length=45, blank=True, null=True)
     status_sample = models.CharField(max_length=45, blank=True, null=True)
     comment = models.CharField(max_length=45, blank=True, null=True)
-    vol = models.FloatField(blank=True, null=True)
+    vol = models.FloatField(blank=True, null=True) 
     price = models.FloatField(blank=True, null=True)
     delivery_date = models.CharField(max_length=45, blank=True, null=True)
     delivery_terms = models.CharField(max_length=45, blank=True, null=True)
@@ -47,9 +47,9 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     reason = models.CharField(max_length=45, blank=True, null=True)
     surface = models.CharField(max_length=45, blank=True, null=True)
     panels = models.IntegerField(blank=True, null=True)
-    powder = models.CharField(max_length=10, blank=True, null=True)
-    surface_type = models.CharField(max_length=45, blank=True, null=True)
-    surface_thin = models.CharField(max_length=45, blank=True, null=True)
+    powder = models.CharField(max_length=10, blank=True, null=True) 
+    surface_type = models.CharField(max_length=45, blank=True, null=True) 
+    surface_thin = models.CharField(max_length=45, blank=True, null=True) 
     ntime_applying = models.CharField(max_length=45, blank=True, null=True)
 
     class Meta:
