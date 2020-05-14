@@ -8,7 +8,7 @@ import logging
 from django.http import HttpResponse
 from .serializers import PaintsFullSerializer, PaintsLeadsFullSerializer
 from django.db.models import Q
-
+from docxtpl import DocxTemplate
 
 logging.basicConfig(level=logging.DEBUG, filename='/home/perespimka/monyze/log.txt', format='%(asctime)s %(levelname)s %(message)s')
 NAME_SWITCH = {
@@ -243,14 +243,14 @@ def sample_data_to_xlsx(paints_to_xlsx):
 
 
 
-def send_mail_to(req, emails, attach):
+def send_mail_to(req, emails, attach, subject, body):
     import base64
 
     #sample_data = data['sample_data'].copy()
     manager_mail = base64.b64decode(req['manager_mail'].encode()).decode('utf-8')
     manager_mail_pass = base64.b64decode(req['manager_mail_pass'].encode()).decode('utf-8')
     #attach = sample_data_to_xlsx(sample_data)
-    em = EmailMessage(subject='Создать образец', body='Просьба создать образец, данные во вложении',
+    em = EmailMessage(subject=subject, body=body,
                       to=emails, from_email=manager_mail
     )
 
@@ -288,10 +288,51 @@ def send_mail_to_lab_prod(req):
         pl.save()
         paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
     attach = sample_data_to_xlsx(paints_to_xlsx)
-    send_mail_to(req, emails, attach)
+    send_mail_to(req, emails, attach, 'Создать образец', 'Просьба создать образец, данные во вложении')
     
+def email_from_contacts(req):
+    contacts = req['data_manager']['man_comp_users']
+    for contact in contacts:
+        email = contact.get('email')
+        if email:
+            return email, contact.get('name'), contact.get('position')
+
+
+
+
 def send_cp(req):
-    pass    
+    context = {}
+    contacts = email_from_contacts(req)
+    if contacts:
+        email, context['fio_from_card'], context['position'] = contacts
+        context['company_name'] = req['data_manager']['man_comp_name']
+        context['manager_name'] = req['data_manager']['man_name'] + ' ' + req['data_manager']['man_last_name']
+        context['manager_email'] = req['data_manager']['man_login']
+        context['manager_phone'] = req['data_manager']['man_phone_number']
+        context['tbl'] = []
+        for pl_id in req['id']:
+            pl_table = {}
+            pl = PaintsLeads.objects.get(id=int(pl_id))
+            pl_table['name'] = (f'{pl.paint.catalog} {pl.paint.code} {pl.paint.basis} {pl.paint.facture} '
+                                f'{pl.paint.shine}, применение {pl.applying}'
+            )
+            pl_table['vol'] = str(pl.vol)
+            pl_table['price'] = str(pl.price)
+            context['tbl'].append(pl_table)
+        doc = DocxTemplate('/home/perespimka/monyze/cp_stardustpaints.docx')
+        doc.render(context)
+        now = time.strftime('%d-%m-%Y', time.localtime())
+        fname = f'mail_files/cp_to_{context["company_name"].lower()}_{now}.docx'
+        doc.save(fname)
+        
+        send_mail_to(req, ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'], fname,
+                     'Коммерческое предложение Stardustpaints', 'Добрый день! Коммерческое предложение во вложении.'   
+        )
+
+
+
+      
+        
     
     
 

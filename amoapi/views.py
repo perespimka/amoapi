@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import logging
 from rest_framework.decorators import api_view
-from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint, get_paint_info, paint_search, send_mail_to_lab_prod
+from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint, get_paint_info, paint_search, send_mail_to_lab_prod, send_cp
 from .tokenz import api_key
 from .models import Leads
 from rest_framework.response import Response
@@ -20,6 +20,7 @@ def send_email(request):
         send_mail_to_lab_prod(request.data)
         #send_mail_to(request.data)
     if request.data['state'] == 'send_cp':
+        send_cp(request.data)
         logging.debug(request.data)
        
     return HttpResponse('<h1>Ok boomer</h1>')
