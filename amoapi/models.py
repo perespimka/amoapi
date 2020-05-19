@@ -52,6 +52,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     surface_thin = models.CharField(max_length=45, blank=True, null=True) 
     ntime_applying = models.CharField(max_length=45, blank=True, null=True)
     paid_sample = models.IntegerField(blank=True, null=True)
+    sublim = models.IntegerField(default=0, blank=True, null=True)
 
     class Meta:
         db_table = 'paints_leads'

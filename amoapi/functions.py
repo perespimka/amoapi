@@ -245,7 +245,7 @@ def send_mail_to(req, emails, attach, subject, body):
     em = EmailMessage(subject=subject, body=body,
                       to=emails, from_email=manager_mail
     )
-
+    em.content_subtype = 'html'
     em.attach_file(attach)
     EmailBackend(
         host = 'mail.stardustpaints.ru',
@@ -324,6 +324,7 @@ def email_from_contacts(req):
 
 def send_cp(req):
     '''Отправка коммерческого предложения'''
+    from .html_sign import sign
     context = {}
     contacts = email_from_contacts(req)
     if contacts:
@@ -347,9 +348,9 @@ def send_cp(req):
         now = time.strftime('%d-%m-%Y', time.localtime())
         fname = f'mail_files/cp_to_{context["company_name"].lower()}_{now}.docx'
         doc.save(fname)
-        
-        send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'], fname,
-                     'Коммерческое предложение Stardustpaints', 'Добрый день! Коммерческое предложение во вложении.'   
+        body = sign.format(**context)
+        send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'dmitrievs@stardustpaints.ru'], fname,
+                     'Коммерческое предложение Stardustpaints', body   
         )
 
 if __name__ == "__main__":
