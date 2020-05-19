@@ -28,7 +28,7 @@ class PaintsLeadsSerializerLink(serializers.ModelSerializer):
         fields = ('temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', #"potential_vol", "kp_price",
                   'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type',
                   'surface_type', "surface_thin", "delivery_date", "delivery_terms", "vol", "price", 'ntime_applying',
-                  "status_sample", 
+                  "status_sample", 'paid_sample'
         )
 # Edit
 class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
@@ -38,7 +38,7 @@ class PaintsLeadsSerializerEdit(serializers.ModelSerializer):
         fields = ('id', 'temperature', 'applying', 'postforming', 'metallic', 'chameleon', 'antibacterial', 
                   'antigraffiti', 'architect', 'zinc', 'client_sample', 'comment', 'status', 'reason', 'surface', 'panels', 'powder', 'product_type', 
                   'surface_type', "surface_thin", "delivery_date", "delivery_terms", "vol", "price", 'ntime_applying',
-                  "status_sample", 
+                  "status_sample", 'paid_sample'
 
         )
 

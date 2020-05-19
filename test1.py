@@ -1,7 +1,8 @@
 from docxtpl import DocxTemplate
+import time
 
 
-def test_temlp():
+def test_templ():
     doc = DocxTemplate('TEST.docx')
     context = {
         'position_from_card': 'sex v govno', 
@@ -14,8 +15,17 @@ def test_temlp():
 
 
     doc.render(context)
-    doc.save('vgovno_tab.docx')
+    doc.save('venv/vgovno_trab.docx')
 
+def test_string():
+    ax = 'sss'
+    a = (f'{ax}asdsd'
+         f'  s {ax}'
+    )
+    print(a)
 
+def time_test():
+    now = time.strftime('%d-%m-%Y', time.localtime())
+    print(now)
 if __name__ == "__main__":
-    test_temlp()
+    test_templ()

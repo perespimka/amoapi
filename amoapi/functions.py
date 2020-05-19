@@ -40,14 +40,11 @@ def combine_paint_data(pl, PlSerializator, PSerializator):
     return serializer_p
 
 def tag_creating(pl):
+    '''Создание тегов'''
     res_string = f'{pl.paint.product} {pl.paint.catalog}{pl.paint.code}'
     if pl.product_type == 'sample':
         res_string = f'Образец {res_string}' 
     return res_string
-
-def add_new_lead_id(pl, dict_to_add):
-    new_id = pl.new_lead.amo_lead_id
-    dict_to_add['new_lead_id'] = new_id
 
 def get_lead_data(req):
     '''
@@ -84,12 +81,6 @@ def get_lead_data(req):
         'lead_paints_info': serializer
     }
     return result
-
-def set_status(pl, req):
-    if req['product_type'] == 'sample':
-        pl.status = 1
-    elif req['product_type'] == 'paint':
-        pl.status = 0
 
 def name_switch(name):
     if name in NAME_SWITCH:
@@ -244,6 +235,7 @@ def sample_data_to_xlsx(paints_to_xlsx):
 
 
 def send_mail_to(req, emails, attach, subject, body):
+    '''Отправка письма с кодировкой'''
     import base64
 
     #sample_data = data['sample_data'].copy()
@@ -265,46 +257,77 @@ def send_mail_to(req, emails, attach, subject, body):
     ).send_messages([em])    
 
 def send_mail_to_lab_prod(req):
+    '''
+    Отправка письма в лабораторию, офис
+    '''
     if req['state'] == 'send_lab':
-        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'] # Изменить на лабу
+        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на лабу
         status_value = 1
-    else:
-        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'] # Изменить на бэкофис
+        subject = 'Создать образец'
+        msg = 'Просьба создать образец, данные во вложении'
+    elif req['state'] == 'send_prod':
+        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на бэкофис
         status_value = 2
-    new_lead = Leads(amo_lead_id=req['new_id'])
+        subject = 'В производство'
+        msg = 'Отправить в производство, данные во вложении'
+    elif req['state'] == 'set_score':
+        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на бэкофис
+        status_value = 2
+        subject = 'Сделать счет'
+        msg = 'Создать счет, данные во вложении'        
+
+    #new_lead = Leads(amo_lead_id=req['new_id'])
     try:
-        new_lead.save()
+        new_lead = Leads.objects.get(amo_lead_id=req['new_id'])
     except:
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        new_lead = None
     paints_to_xlsx = []
-    for pl_id in req['id']:
-        pl = PaintsLeads.objects.get(id=pl_id)
-        pl.status = status_value
-        pl.new_lead = new_lead
-        pl.save()
-        pl.id = None
-        pl.lead = new_lead
-        pl.new_lead = None
-        pl.save()
-        paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
+    #Если сделка с таким id уже существует, тогда просто обновляем статус у красок
+    if new_lead: 
+        for pl_id in req['id']:
+            pl = PaintsLeads.objects.get(id=pl_id)
+            pl.status = status_value
+            pl.save()
+            paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
+    #Если сделки нет, создаем новую сделку и копируем в нее краски. В старух красках в поле new_lead пишем новый айди сделки
+    else:
+        new_lead = Leads(amo_lead_id=req['new_id'])
+  
+        try:
+            new_lead.save()
+        except:
+            logging.debug(f'Новый лид уже существует ({new_lead.amo_lead_id} , state: {req["state"]})')
+
+        
+        for pl_id in req['id']:
+            pl = PaintsLeads.objects.get(id=pl_id)
+            pl.status = status_value
+            pl.new_lead = new_lead
+            pl.save()
+            pl.id = None
+            pl.lead = new_lead
+            pl.new_lead = None
+            pl.save()
+            paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
     attach = sample_data_to_xlsx(paints_to_xlsx)
-    send_mail_to(req, emails, attach, 'Создать образец', 'Просьба создать образец, данные во вложении')
-    
+    send_mail_to(req, emails, attach, subject, msg)
+
 def email_from_contacts(req):
+    '''
+    Данные из запроса возвращаем в виде кортежа (мейл, имя, должность)
+    '''
     contacts = req['data_manager']['man_comp_users']
     for contact in contacts:
         email = contact.get('email')
         if email:
             return email, contact.get('name'), contact.get('position')
 
-
-
-
 def send_cp(req):
+    '''Отправка коммерческого предложения'''
     context = {}
     contacts = email_from_contacts(req)
     if contacts:
-        email, context['fio_from_card'], context['position'] = contacts
+        email, context['fio_from_card'], context['position_from_card'] = contacts
         context['company_name'] = req['data_manager']['man_comp_name']
         context['manager_name'] = req['data_manager']['man_name'] + ' ' + req['data_manager']['man_last_name']
         context['manager_email'] = req['data_manager']['man_login']
@@ -325,17 +348,9 @@ def send_cp(req):
         fname = f'mail_files/cp_to_{context["company_name"].lower()}_{now}.docx'
         doc.save(fname)
         
-        send_mail_to(req, ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'], fname,
+        send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com'], fname,
                      'Коммерческое предложение Stardustpaints', 'Добрый день! Коммерческое предложение во вложении.'   
         )
-
-
-
-      
-        
-    
-    
-
 
 if __name__ == "__main__":
     print(name_switch('RAL'))

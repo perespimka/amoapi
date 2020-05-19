@@ -12,3 +12,4 @@ migrations/
 .sock
 log.txt
 test*.py
+static/
