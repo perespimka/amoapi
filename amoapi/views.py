@@ -4,9 +4,9 @@ import logging
 from rest_framework.decorators import api_view
 from .functions import get_lead_data, attach_goods, del_paintsleads_rec, edit_paint, get_paint_info, paint_search, send_mail_to_lab_prod, send_cp
 from .tokenz import api_key
-from .models import Leads
+from .models import Leads, MailPass
 from rest_framework.response import Response
-from .serializers import PaintsLeadsSerializer
+from .serializers import PaintsLeadsSerializer, MailPassSer
 
 logging.basicConfig(level=logging.DEBUG, filename='/home/perespimka/monyze/log.txt', format='%(asctime)s %(levelname)s %(message)s')
 
@@ -60,5 +60,23 @@ def paints(request):
             return Response(get_paint_info(req))
         if req['state'] == 'search' and len(req['query']) >= 2:
             return Response(paint_search(req))
+
+
+@api_view(['POST'])
+def add_user(request):
+    '''
+    Добавляет пользователей с хешированными в base64 паролями в базу
+    На вход ждем структуру {'api_key': "key", 'mail_data': [{'email': 'email', 'password': 'password'}]}
+    '''
+    import base64
+    req = request.data
+    if not api_key == req['api_key']:
+        return HttpResponse('<h1>Nice try :D</h1>')
+    for user_data in req['mail_data']:
+        user_ser = MailPassSer(data=user_data)
+        if user_ser.is_valid():
+            user_ser.save()
+    return Response({'status:': 'done'})
+
 
 

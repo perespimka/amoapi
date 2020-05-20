@@ -13,3 +13,6 @@ migrations/
 log.txt
 test*.py
 static/
+mail_data.json
+test_request.py
+test1.py

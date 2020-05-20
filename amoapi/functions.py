@@ -1,7 +1,7 @@
 from django.core.mail import EmailMessage
 from django.core.mail.backends.smtp import EmailBackend
 import time
-from .models import Leads, Paints, PaintsLeads
+from .models import Leads, Paints, PaintsLeads, MailPass
 from .serializers import PaintsLeadsSerializer, PaintsLeadsSerializerLink, PaintsSerializer, PaintsSerializerLink, PaintsLeadsSerializerEdit
 from .serializers import PaintsLeadsEmailSerializer
 import logging
@@ -239,8 +239,14 @@ def send_mail_to(req, emails, attach, subject, body):
     import base64
 
     #sample_data = data['sample_data'].copy()
-    manager_mail = base64.b64decode(req['manager_mail'].encode()).decode('utf-8')
-    manager_mail_pass = base64.b64decode(req['manager_mail_pass'].encode()).decode('utf-8')
+    manager_mail = req['manager_mail']
+    try:
+        user = MailPass.objects.get(email=manager_mail)
+    except:
+        logging.debug('Не удалось найти данные почтового адреса менеджера для отправки письма')
+        return None
+    
+    manager_mail_pass = base64.b64decode(user.password.encode()).decode('utf-8')
     #attach = sample_data_to_xlsx(sample_data)
     em = EmailMessage(subject=subject, body=body,
                       to=emails, from_email=manager_mail
@@ -352,6 +358,7 @@ def send_cp(req):
         send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'dmitrievs@stardustpaints.ru'], fname,
                      'Коммерческое предложение Stardustpaints', body   
         )
+
 
 if __name__ == "__main__":
     print(name_switch('RAL'))

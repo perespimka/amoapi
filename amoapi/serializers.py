@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Leads, Paints, PaintsLeads
+from .models import Leads, Paints, PaintsLeads, MailPass
 
 
 # Сериализаторы для get_lead_inf
@@ -61,3 +61,8 @@ class PaintsLeadsEmailSerializer(serializers.ModelSerializer):
         model = PaintsLeads
         #fields = ('__all__')
         exclude = ('id', 'lead', 'paint', 'date_add', 'new_lead'  )
+
+class MailPassSer(serializers.ModelSerializer):
+    class Meta:
+        model = MailPass
+        fields = ('__all__')

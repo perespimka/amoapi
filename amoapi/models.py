@@ -5,7 +5,6 @@ class Leads(models.Model):
     amo_lead_id = models.IntegerField(unique=True)
     user_id = models.IntegerField(blank=True, null=True)
     
-
     class Meta:
         db_table = 'leads'
 
@@ -56,3 +55,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
 
     class Meta:
         db_table = 'paints_leads'
+
+class MailPass(models.Model):
+    email = models.CharField(max_length=45, unique=True)
+    password = models.CharField(max_length=45)    
