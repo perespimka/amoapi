@@ -232,14 +232,20 @@ def sample_data_to_xlsx(paints_to_xlsx):
     df_sample_data.to_excel(fname, index=None)
     return fname
 
+def data_to_xlsx(req, paints_to_xlsx):
+    from openpyxl import load_workbook
+    wb = load_workbook('template.xlsx')
+    
 
 
-def send_mail_to(req, emails, attach, subject, body):
+def send_mail_to(req, emails, attach, subject, body): # Переписать attach как список имен файлов
     '''Отправка письма с кодировкой'''
     import base64
 
     #sample_data = data['sample_data'].copy()
     manager_mail = req['manager_mail']
+    if manager_mail == 'stardustpaintsamo@mail.ru':
+        manager_mail = 'soloviev@stardustpaints.ru'
     try:
         user = MailPass.objects.get(email=manager_mail)
     except:
@@ -247,12 +253,11 @@ def send_mail_to(req, emails, attach, subject, body):
         return None
     
     manager_mail_pass = base64.b64decode(user.password.encode()).decode('utf-8')
-    #attach = sample_data_to_xlsx(sample_data)
     em = EmailMessage(subject=subject, body=body,
                       to=emails, from_email=manager_mail
     )
     em.content_subtype = 'html'
-    em.attach_file(attach)
+    em.attach_file(attach) 
     EmailBackend(
         host = 'mail.stardustpaints.ru',
         username = manager_mail,
@@ -295,7 +300,7 @@ def send_mail_to_lab_prod(req):
             pl.status = status_value
             pl.save()
             paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
-    #Если сделки нет, создаем новую сделку и копируем в нее краски. В старух красках в поле new_lead пишем новый айди сделки
+    #Если сделки нет, создаем новую сделку и копируем в нее краски. В старых красках в поле new_lead пишем новый айди сделки
     else:
         new_lead = Leads(amo_lead_id=req['new_id'])
   
@@ -315,6 +320,7 @@ def send_mail_to_lab_prod(req):
             pl.new_lead = None
             pl.save()
             paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
+    # Ниже меняем
     attach = sample_data_to_xlsx(paints_to_xlsx)
     send_mail_to(req, emails, attach, subject, msg)
 
@@ -323,18 +329,20 @@ def email_from_contacts(req):
     Данные из запроса возвращаем в виде кортежа (мейл, имя, должность)
     '''
     contacts = req['data_manager']['man_comp_users']
+    email = req['data_manager']['сlient_mail']
+    logging.debug(email)
     for contact in contacts:
-        email = contact.get('email')
-        if email:
-            return email, contact.get('name'), contact.get('position')
+        if contact.get('email'): # Тут переписывать будем, ждем когда с фронта будет приходить имя клиента
+            return email, contact.get('name')
 
 def send_cp(req):
     '''Отправка коммерческого предложения'''
     from .html_sign import sign
     context = {}
     contacts = email_from_contacts(req)
+    logging.debug(f'contacts tuple: {contacts}')
     if contacts:
-        email, context['fio_from_card'], context['position_from_card'] = contacts
+        email, context['fio_from_card'] = contacts
         context['company_name'] = req['data_manager']['man_comp_name']
         context['manager_name'] = req['data_manager']['man_name'] + ' ' + req['data_manager']['man_last_name']
         context['manager_email'] = req['data_manager']['man_login']
@@ -343,9 +351,17 @@ def send_cp(req):
         for pl_id in req['id']:
             pl_table = {}
             pl = PaintsLeads.objects.get(id=int(pl_id))
+            applying = pl.applying
+            if applying and applying != 'Не определено':
+                applying = f', применение {pl.applying}'
+            params = (pl.paint.catalog, pl.paint.code, pl.paint.basis, pl.paint.facture, pl.paint.shine, applying)
+            params = [param for param in params if param != 'Не определено']
+            pl_table['name'] = ' '.join(params)
+            '''
             pl_table['name'] = (f'{pl.paint.catalog} {pl.paint.code} {pl.paint.basis} {pl.paint.facture} '
                                 f'{pl.paint.shine}, применение {pl.applying}'
             )
+            '''
             pl_table['vol'] = str(pl.vol)
             pl_table['price'] = str(pl.price)
             context['tbl'].append(pl_table)

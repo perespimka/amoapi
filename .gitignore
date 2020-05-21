@@ -16,3 +16,4 @@ static/
 mail_data.json
 test_request.py
 test1.py
+/models*.py
