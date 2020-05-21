@@ -329,7 +329,7 @@ def email_from_contacts(req):
     Данные из запроса возвращаем в виде кортежа (мейл, имя, должность)
     '''
     contacts = req['data_manager']['man_comp_users']
-    email = req['data_manager']['сlient_mail']
+    email = req['data_manager']['client_mail']
     logging.debug(email)
     for contact in contacts:
         if contact.get('email'): # Тут переписывать будем, ждем когда с фронта будет приходить имя клиента
