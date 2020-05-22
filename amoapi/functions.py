@@ -196,7 +196,6 @@ def get_paint_info(req):
             pl = PaintsLeads.objects.get(id=req['paints_leads_id'])
         except:
             return {'status': 'paints_leads_id not found'}
-
         return combine_paint_data(pl, PaintsLeadsFullSerializer, PaintsFullSerializer)
     elif 'paint_id' in req:
         try:
@@ -220,25 +219,96 @@ def paint_search(req):
     return result
 #*******   
 
-def sample_data_to_xlsx(paints_to_xlsx):
-    '''
-    Создаем файл xlsx с данными образца для отправки в лабораторию
-    Возвращаем имя файла
-    '''
-    import pandas as pd
-    df_sample_data = pd.DataFrame(paints_to_xlsx)
-    str_time = str(int(time.time()*1000)) + '.xlsx'
-    fname = 'mail_files/' + str_time 
-    df_sample_data.to_excel(fname, index=None)
-    return fname
-
 def data_to_xlsx(req, paints_to_xlsx):
+    '''
+    Формируем xlsx файлы по шаблону. Одна краска - один файл. Возвращаем список имен файлов
+    '''
     from openpyxl import load_workbook
-    wb = load_workbook('template.xlsx')
+    data_manager = req['data_manager']
+    count = 0
+    fnames = []
+    if req['state'] == 'send_lab':
+        for paint in paints_to_xlsx:
+            wb = load_workbook('sample_template.xlsx')
+            ws = wb.active
+            if paint['paid_sample'] == 1:
+                ws['B7'] = 'Да'
+            else:
+                ws['B7'] = 'Нет'
+            ws['B6'] = data_manager.get('man_comp_payer') # ИНН
+            ws['B5'] = data_manager.get('man_comp_name') # Имя компании
+            ws['B3'] = data_manager.get('man_name') # Имя менеджера
+            ws['B4'] = time.strftime('%d-%m-%Y', time.localtime()) # Дата оформления заявки
+            ws['B9'] = paint['name']
+            ws['B10'] = paint['product']
+            ws['B11'] = paint['basis']
+            ws['B12'] = paint['catalog']
+            ws['B13'] = paint['code']
+            ws['B14'] = paint['shine']
+            ws['B15'] = paint['facture']
+            ws['B16'] = paint.get('temperature')
+            ws['B17'] = paint.get('applying')
+            ws['B19'] = paint.get('surface_type')
+            ws['B20'] = paint.get('surface_thin')
+            ws['B22'] = str(paint.get('panels'))
+            ws['B23'] = paint.get('powder')
+            ws['B24'] = paint.get('client_sample')
+            ws['B25'] = paint.get('comment')
+            ws['D10'] = paint.get('postforming')
+            ws['D11'] = paint.get('metallic')
+            ws['D12'] = paint.get('chameleon')   
+            ws['D13'] = paint.get('antibacterial')
+            ws['D14'] = paint.get('antigraffiti')
+            ws['D15'] = paint.get('architect')
+            ws['D16'] = paint.get('zinc')
+            ws['D18'] = paint.get('sublim')
+            fname = f'{paint["name"]}_{count}.xlsx'.replace('/', '_')
+            fname = 'mail_files/' + fname
+            count += 1
+            fnames.append(fname)
+            wb.save(fname)
+    elif req['state'] == 'set_score':
+        for paint in paints_to_xlsx:
+            wb = load_workbook('invoice_template.xlsx')
+            ws = wb.active
+            ws['B7'] = paint.get('vol')
+            ws['B8'] = paint.get('price')
+            ws['B9'] = paint.get('delivery_terms')
+            ws['B10'] = paint.get('delivery_date')
+            ws['B6'] = data_manager.get('man_comp_payer') # ИНН
+            ws['B5'] = data_manager.get('man_comp_name') # Имя компании
+            ws['B3'] = data_manager.get('man_name') # Имя менеджера
+            ws['B4'] = time.strftime('%d-%m-%Y', time.localtime()) # Дата оформления заявки
+            ws['B12'] = paint['name']
+            ws['B13'] = paint['product']
+            ws['B14'] = paint['basis']
+            ws['B15'] = paint['catalog']
+            ws['B16'] = paint['code']
+            ws['B17'] = paint['shine']
+            ws['B18'] = paint['facture']
+            ws['B19'] = paint.get('temperature')
+            ws['B20'] = paint.get('applying')
+            ws['B22'] = paint.get('surface_type')
+            ws['B23'] = paint.get('surface_thin')
+            ws['B25'] = paint.get('comment')
+            ws['D13'] = paint.get('postforming')
+            ws['D14'] = paint.get('metallic')
+            ws['D15'] = paint.get('chameleon')   
+            ws['D16'] = paint.get('antibacterial')
+            ws['D17'] = paint.get('antigraffiti')
+            ws['D18'] = paint.get('architect')
+            ws['D19'] = paint.get('zinc')
+            ws['D21'] = paint.get('sublim')
+            fname = f'{paint["name"]}_{count}.xlsx'.replace('/', '_')
+            fname = 'mail_files/' + fname
+            count += 1
+            fnames.append(fname)
+            wb.save(fname)        
+    return fnames
     
 
 
-def send_mail_to(req, emails, attach, subject, body): # Переписать attach как список имен файлов
+def send_mail_to(req, emails, attachments, subject, body): # Переписать attach как список имен файлов
     '''Отправка письма с кодировкой'''
     import base64
 
@@ -257,7 +327,8 @@ def send_mail_to(req, emails, attach, subject, body): # Переписать att
                       to=emails, from_email=manager_mail
     )
     em.content_subtype = 'html'
-    em.attach_file(attach) 
+    for attach in attachments:
+        em.attach_file(attach) 
     EmailBackend(
         host = 'mail.stardustpaints.ru',
         username = manager_mail,
@@ -320,9 +391,10 @@ def send_mail_to_lab_prod(req):
             pl.new_lead = None
             pl.save()
             paints_to_xlsx.append(combine_paint_data(pl, PaintsLeadsEmailSerializer, PaintsFullSerializer))
-    # Ниже меняем
-    attach = sample_data_to_xlsx(paints_to_xlsx)
-    send_mail_to(req, emails, attach, subject, msg)
+    # Ниже меняем функцию по обработке, которая будет возвращать список имен файлов
+
+    attachments = data_to_xlsx(req, paints_to_xlsx)
+    send_mail_to(req, emails, attachments, subject, msg)
 
 def email_from_contacts(req):
     '''
@@ -330,10 +402,8 @@ def email_from_contacts(req):
     '''
     contacts = req['data_manager']['man_comp_users']
     email = req['data_manager']['client_mail']
-    logging.debug(email)
-    for contact in contacts:
-        if contact.get('email'): # Тут переписывать будем, ждем когда с фронта будет приходить имя клиента
-            return email, contact.get('name')
+    name = req['data_manager']['client_name']
+    return email, name
 
 def send_cp(req):
     '''Отправка коммерческого предложения'''
@@ -371,7 +441,7 @@ def send_cp(req):
         fname = f'mail_files/cp_to_{context["company_name"].lower()}_{now}.docx'
         doc.save(fname)
         body = sign.format(**context)
-        send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'dmitrievs@stardustpaints.ru'], fname,
+        send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'dmitrievs@stardustpaints.ru'], [fname],
                      'Коммерческое предложение Stardustpaints', body   
         )
 

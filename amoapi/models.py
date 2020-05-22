@@ -35,7 +35,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     architect = models.IntegerField(blank=True, null=True)
     zinc = models.IntegerField(blank=True, null=True)
     client_sample = models.CharField(max_length=45, blank=True, null=True)
-    status_sample = models.CharField(max_length=45, blank=True, null=True)
+    status_sample = models.CharField(max_length=155, blank=True, null=True)
     comment = models.CharField(max_length=45, blank=True, null=True)
     vol = models.FloatField(blank=True, null=True) 
     price = models.FloatField(blank=True, null=True)

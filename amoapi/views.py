@@ -13,18 +13,13 @@ logging.basicConfig(level=logging.DEBUG, filename='/home/perespimka/monyze/log.t
 # Create your views here.
 @api_view(['POST'])
 def send_email(request):
-    #logging.debug('request:')
-    #logging.debug(request.content_type)
-    #logging.debug(request.data)
+    logging.debug(request.data)
     if request.data['state'] == 'send_lab' or request.data['state'] == 'send_prod' or request.data['state'] == 'set_score':
         send_mail_to_lab_prod(request.data)
         #send_mail_to(request.data)
     if request.data['state'] == 'send_cp':
         send_cp(request.data)
-        logging.debug(request.data)
-       
     return HttpResponse('<h1>Ok boomer</h1>')
-
 
 @api_view(['POST'])
 def leads(request):
@@ -61,7 +56,6 @@ def paints(request):
         if req['state'] == 'search' and len(req['query']) >= 2:
             return Response(paint_search(req))
 
-
 @api_view(['POST'])
 def add_user(request):
     '''
@@ -77,6 +71,3 @@ def add_user(request):
         if user_ser.is_valid():
             user_ser.save()
     return Response({'status:': 'done'})
-
-
-
