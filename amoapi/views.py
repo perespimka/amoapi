@@ -24,6 +24,7 @@ def send_email(request):
 @api_view(['POST'])
 def leads(request):
     req = request.data
+    logging.debug(req)
     if not api_key == req['api_key']:
         return HttpResponse('<h1>Nice try :D</h1>')
     if req['request_from'] == 'amo':
@@ -37,7 +38,7 @@ def leads(request):
             return HttpResponse('done') # Так хотят на фронте
         elif req['state'] == 'link' and req['lead_id'] and req['product_type']:
             result = attach_goods(req)
-            logging.debug(result)
+            #logging.debug(result)
             return Response(result)
         elif req['state'] == 'unlink':
             return Response(del_paintsleads_rec(req))
@@ -48,6 +49,7 @@ def leads(request):
 @api_view(['POST'])
 def paints(request):
     req = request.data
+    logging.debug(req)
     if not api_key == req['api_key']:
         return HttpResponse('<h1>Nice try :D</h1>')
     if req['request_from'] == 'amo':

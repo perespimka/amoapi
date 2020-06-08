@@ -46,7 +46,7 @@ class PaintsLeads(models.Model): #Сюда добавить поле стату�
     reason = models.CharField(max_length=45, blank=True, null=True)
     surface = models.CharField(max_length=45, blank=True, null=True)
     panels = models.IntegerField(blank=True, null=True)
-    powder = models.CharField(max_length=10, blank=True, null=True) 
+    powder = models.CharField(max_length=45, blank=True, null=True) 
     surface_type = models.CharField(max_length=45, blank=True, null=True) 
     surface_thin = models.CharField(max_length=45, blank=True, null=True) 
     ntime_applying = models.CharField(max_length=45, blank=True, null=True)

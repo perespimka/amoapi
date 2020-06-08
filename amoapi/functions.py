@@ -98,7 +98,7 @@ def attach_goods(req):
     '''
     if all((req['product'], req['basis'], req['catalog'], req['code'], req['shine'], req['facture'])):
         serialize_p = PaintsSerializerLink(data=req)
-        logging.debug(req)
+        #logging.debug(req)
         if serialize_p.is_valid():
             name = get_paint_name(req)
             try:
@@ -343,7 +343,7 @@ def send_mail_to_lab_prod(req):
     Отправка письма в лабораторию, офис
     '''
     if req['state'] == 'send_lab':
-        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на лабу
+        emails = ['lab@stardustpaints.ru','s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на лабу
         status_value = 1
         subject = 'Создать образец'
         msg = 'Просьба создать образец, данные во вложении'
@@ -353,7 +353,7 @@ def send_mail_to_lab_prod(req):
         subject = 'В производство'
         msg = 'Отправить в производство, данные во вложении'
     elif req['state'] == 'set_score':
-        emails = ['s.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на бэкофис
+        emails = ['backoffice@stardustpaints.ru', 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'ts@stardustpaints.ru'] # Изменить на бэкофис
         status_value = 2
         subject = 'Сделать счет'
         msg = 'Создать счет, данные во вложении'        
@@ -400,7 +400,7 @@ def email_from_contacts(req):
     '''
     Данные из запроса возвращаем в виде кортежа (мейл, имя, должность)
     '''
-    contacts = req['data_manager']['man_comp_users']
+    
     email = req['data_manager']['client_mail']
     name = req['data_manager']['client_name']
     return email, name
@@ -410,7 +410,6 @@ def send_cp(req):
     from .html_sign import sign
     context = {}
     contacts = email_from_contacts(req)
-    logging.debug(f'contacts tuple: {contacts}')
     if contacts:
         email, context['fio_from_card'] = contacts
         context['company_name'] = req['data_manager']['man_comp_name']
@@ -425,8 +424,12 @@ def send_cp(req):
             if applying and applying != 'Не определено':
                 applying = f', применение {pl.applying}'
             params = (pl.paint.catalog, pl.paint.code, pl.paint.basis, pl.paint.facture, pl.paint.shine, applying)
-            params = [param for param in params if param != 'Не определено']
-            pl_table['name'] = ' '.join(params)
+            logging.debug(f'params: {params}')
+            params = [param for param in params if param != 'Не определено' and param]
+            if len(params) > 0:
+                pl_table['name'] = ' '.join(params)
+            else:
+                pl_table['name'] = ''
             '''
             pl_table['name'] = (f'{pl.paint.catalog} {pl.paint.code} {pl.paint.basis} {pl.paint.facture} '
                                 f'{pl.paint.shine}, применение {pl.applying}'
@@ -438,7 +441,7 @@ def send_cp(req):
         doc = DocxTemplate('/home/perespimka/monyze/cp_stardustpaints.docx')
         doc.render(context)
         now = time.strftime('%d-%m-%Y', time.localtime())
-        fname = f'mail_files/cp_to_{context["company_name"].lower()}_{now}.docx'
+        fname = f'mail_files/КП порошковая краска Stardust-{context["company_name"].lower()}_{now}.docx'
         doc.save(fname)
         body = sign.format(**context)
         send_mail_to(req, [email, 's.dmitrievlol@yandex.ru', 'soloviev357@gmail.com', 'dmitrievs@stardustpaints.ru'], [fname],
